@@ -18,20 +18,17 @@ const server = lr();
 
 function styles() {
     return src('./src/css/**/*.css')
-        /*   .pipe(sass().on('error', sass.logError)) */
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
         }))
         .pipe(clean())
         .pipe(concat('style.css'))
         .pipe(gulp.dest('./dist/css'));
-       // .pipe(browserSync.stream());
 }
 
 function img() {
     return src('./src/images/**/*')
         .pipe(imagemin([
-            // pngquant({quality: [0.5, 0.5]}),
             mozjpeg({ quality: 50 })
         ]))
         .pipe(gulp.dest('./dist/images/'))
@@ -40,44 +37,29 @@ function img() {
 function js() {
     return src(['./src/js/resources.js', './src/js/app.js', './src/js/engine.js'])
         .pipe(sourcemaps.init())
-        /* .pipe(babel({
-           presets: ['@babel/env']
-       }))  */
         .pipe(babel({
             presets: [
                 ['@babel/preset-env', { modules: false }]
             ]
         }))
-        .pipe(concat('main.js')) // app >engine> resizeBy
+        .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(minify())
-        /* .pipe(rename('main.min.js'))  */
-        //.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist/js'))
 }
 
 function html() {
     return gulp.src('./index.html')
         .pipe(gulp.dest('./dist'))
-        //.pipe(livereload(server))
 }
-
 
 exports.styles = styles;
 exports.img = img;
 exports.js = js;
 exports.html = html;
 
-
 exports.all = gulp.series(styles, js, img, html, function () {
-   /*  browserSync.init({
-        server: {
-            baseDir: "./"
-        }
-    }); */
-
     gulp.watch('./src/css/**/*.css', styles);
     gulp.watch('./src/js/*js', js);
     gulp.watch('./index.html', html);
-        //.on('change', browserSync.reload);
 });
