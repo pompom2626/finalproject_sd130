@@ -1,0 +1,3 @@
+ if (which == 'left' && this.x >= 0) {
+      this.x -= 20;
+    } else if (which == 'up') {

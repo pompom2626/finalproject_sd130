@@ -1,0 +1,226 @@
+//global variables
+let lives = 3;
+let levels = 0;
+let speed = 2;
+
+
+
+
+
+
+// The GOAL!
+// Once the player touches the SUN, they make it to the next level.
+function Sun(x, y) {
+  // Each Sun, should have an 'x' and a 'y' property
+  // to determine it's starting position
+  this.x = x;
+  this.y = y;
+
+}
+
+
+
+
+// Enemies our player must avoid
+function Enemy(x, y, style, direction) {
+  this.x = x;
+  this.y = y;
+  this.style = style;
+  this.direction = direction;
+  // Each Sun, accept and set an 'x' and a 'y' property
+  // to determine it's starting position.
+  // Additionally, it should have a 'direction'
+  // property with the value of either "ltr" or "rtl"
+  // (left to right) or (right to left) so you know
+  // 1) which way the enemy is travelling and
+  // 2) which image to use (flipped or not flipped)
+  // It should also accept a style of 'enemy1',
+  // 'enemy2' or 'enemy3', depending on what sort of
+  // enemy character you want to use.
+
+  // YOU MAY WANT/NEED other properties in addition
+  // to the ones listed.
+}
+
+
+
+
+// Update the enemy's position, required method for game
+// Parameter: dt, a time delta between ticks
+Enemy.prototype.update = function (dt) {
+  if (this.x < 800 && this.x > 0 && (this.direction == 'rtl')) {
+    this.x += speed;
+  }
+  else if (this.x >= 800 && (this.direction == 'rtl')) {
+    //reverse ltr
+    this.direction = 'ltr';
+    this.x -= speed;
+  }
+  else if (this.x > 0 && this.x < 800 && (this.direction = 'ltr')) {
+    this.x -= speed;
+  }
+  else if (this.x <= 0 && (this.direction = 'ltr')) {
+    //this.x =< 0 >> reverse rtl
+    this.direction = 'rtl';
+    this.x += speed;
+  }
+  // You should multiply any movement by the dt parameter
+  // which will ensure the game runs at the same speed for
+  // all computers.
+  //this.hitcheckEnemy(player, allEnemies);
+
+  //levels to html
+  document.querySelector("#lives").lastChild.innerHTML = lives;
+  document.querySelector("#score").lastChild.innerHTML = levels;
+
+  this.hitcheckEnemy(player, allEnemies);
+  this.hitcheckSun();
+
+};
+
+//hit enemy
+Enemy.prototype.hitcheckEnemy = function (rect1, rect2) {
+  let width = 70; //picture detail
+  let enemyHeight = 80;
+  let playerHeight = 80;
+
+  rect2.forEach(function (ele) {
+
+    if (rect1.x < ele.x + width &&
+      rect1.x + width > ele.x &&
+      rect1.y < ele.y + enemyHeight &&
+      playerHeight + rect1.y > ele.y) {
+
+      //lives decrease
+      lives -= 1;
+
+      //player relocation 
+      rect1.x = 300;
+      rect1.y = 400;
+
+      //end game
+      if (lives <= 0) {
+        alert('GAME END');
+        //restor lives again
+        lives = 3;
+        //enemy speed restore
+        speed = 1;
+        //level restore
+        levels = 0;
+      }
+      return true;
+    }
+    return false;
+  });
+}
+
+//hit sun
+Enemy.prototype.hitcheckSun = function () {
+  if (player.x > 219 && player.x < 381 && player.y < 91) {
+
+    //increase speed
+    speed += 2;
+    //increase level
+    levels += 1;
+    //player relocation 
+    player.x = 300;
+    player.y = 400;
+  }
+}
+
+
+
+
+// Now write your own player class
+// This class requires an update() and
+// a handleInput() method. It will also need
+// an `x` and a `y` starting coordinate.
+class Player {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  update(dt) {
+  }
+
+  handleInput(which) {
+    // player movement
+    if (which == 'left') {
+      if (this.x <= 0) {
+        return;
+      }
+      this.x -= 20;
+    } else if (which == 'up') {
+
+      if (this.y <= 0) {
+        return this.y = 20;
+      }
+      this.y -= 20;
+    } else if (which == 'right') {
+      if (this.x <= -1) {
+        return;
+      } else if (this.x > 799) {
+        return;
+      }
+      this.x += 20;
+    }
+    else if (which == 'down') {
+      if (this.y <= -1) {
+        return;
+      } else if (this.y > 439) {
+        return;
+      }
+      this.y += 20;
+    }
+
+
+  }
+
+};
+
+// Now instantiate your objects.
+// Place all enemy objects in an array called allEnemies
+// Place the player object in a variable called player
+// Place the sun object in a variable called sun
+let player = new Player(300, 400);
+let sun = new Sun(300, 10);
+let allEnemies = [
+  (new Enemy(200, 80, 'enemy1', 'rtl')),
+  (new Enemy(100, 150, 'enemy2', 'rtl')),
+  (new Enemy(300, 250, 'enemy3', 'rtl'))
+];
+
+// This listens for key presses and sends the keys to your
+// Player.handleInput() method. You don't need to modify this.
+document.addEventListener('keyup', function (e) {
+  const allowedKeys = {
+    37: 'left',
+    38: 'up',
+    39: 'right',
+    40: 'down'
+  };
+
+  player.handleInput(allowedKeys[e.keyCode]);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
