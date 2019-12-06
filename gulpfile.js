@@ -18,10 +18,10 @@ const server = lr();
 
 function styles() {
     return src('./src/css/**/*.css')
-       /*  .pipe(autoprefixer({
+       .pipe(autoprefixer({
             browsers: ['last 2 versions'],
-        })) */
-        .pipe(clean())
+        })) 
+        /* .pipe(clean()) */
         .pipe(concat('style.css'))
         .pipe(gulp.dest('./dist/css'));
 }
