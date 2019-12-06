@@ -42,8 +42,8 @@ function js() {
                 ['@babel/preset-env', { modules: false }]
             ]
         })) 
-       /*  .pipe(concat('main.js')) */
-        .pipe(uglify())
+        .pipe(concat('main.js'))
+        /* .pipe(uglify()) */
         .pipe(minify())
         .pipe(gulp.dest('./dist/js'))
 }
