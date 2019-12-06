@@ -48,11 +48,11 @@ function js() {
         .pipe(gulp.dest('./dist/js'))
 }
 
-/* function html() {
+function html() {
     return gulp.src('./index.html')
         .pipe(gulp.dest('./dist'))
 }
- */
+
 exports.styles = styles;
 exports.img = img;
 exports.js = js;
@@ -61,5 +61,5 @@ exports.html = html;
 exports.all = gulp.series(styles, js, img, html, function () {
     gulp.watch('./src/css/**/*.css', styles);
     gulp.watch('./src/js/*js', js);
-    gulp.watch('./index.html', html);
+    /* gulp.watch('./index.html', html); */
 });
