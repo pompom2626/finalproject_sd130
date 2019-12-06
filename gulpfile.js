@@ -18,19 +18,19 @@ const server = lr();
 
 function styles() {
     return src('./src/css/**/*.css')
-       .pipe(autoprefixer({
+        .pipe(autoprefixer({
             browsers: ['last 2 versions'],
-        })) 
-        .pipe(clean()) 
+        }))
+        .pipe(clean())
         .pipe(concat('style.css'))
         .pipe(gulp.dest('./dist/css'));
 }
 
 function img() {
     return src('./src/images/**/*')
-       .pipe(imagemin([
+        .pipe(imagemin([
             mozjpeg({ quality: 50 })
-        ])) 
+        ]))
         .pipe(gulp.dest('./dist/images/'))
 }
 
@@ -41,18 +41,18 @@ function js() {
             presets: [
                 ['@babel/preset-env', { modules: false }]
             ]
-        })) 
+        }))
         .pipe(concat('main.js'))
-        /* .pipe(uglify()) */
+        .pipe(uglify())
         .pipe(minify())
         .pipe(gulp.dest('./dist/js'))
 }
 
-function html() {
+/* function html() {
     return gulp.src('./index.html')
         .pipe(gulp.dest('./dist'))
 }
-
+ */
 exports.styles = styles;
 exports.img = img;
 exports.js = js;
