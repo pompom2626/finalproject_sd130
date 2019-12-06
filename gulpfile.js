@@ -21,16 +21,16 @@ function styles() {
        .pipe(autoprefixer({
             browsers: ['last 2 versions'],
         })) 
-        /* .pipe(clean()) */
+        .pipe(clean()) 
         .pipe(concat('style.css'))
         .pipe(gulp.dest('./dist/css'));
 }
 
 function img() {
     return src('./src/images/**/*')
-        .pipe(imagemin([
+      /*   .pipe(imagemin([
             mozjpeg({ quality: 50 })
-        ]))
+        ])) */
         .pipe(gulp.dest('./dist/images/'))
 }
 
