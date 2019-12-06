@@ -28,20 +28,20 @@ function styles() {
 
 function img() {
     return src('./src/images/**/*')
-      /*   .pipe(imagemin([
+       .pipe(imagemin([
             mozjpeg({ quality: 50 })
-        ])) */
+        ])) 
         .pipe(gulp.dest('./dist/images/'))
 }
 
 function js() {
     return src(['./src/js/resources.js', './src/js/app.js', './src/js/engine.js'])
         .pipe(sourcemaps.init())
-        .pipe(babel({
+      /*   .pipe(babel({
             presets: [
                 ['@babel/preset-env', { modules: false }]
             ]
-        }))
+        })) */
         .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(minify())
