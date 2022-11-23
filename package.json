@@ -10,7 +10,7 @@
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-es2015": "^7.0.0-beta.53",
-    "browser-sync": "^2.26.7",
+    "browser-sync": "^2.27.10",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.2.0",
